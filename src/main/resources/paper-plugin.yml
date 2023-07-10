@@ -1,0 +1,7 @@
+name: Personalities
+version: '${version}'
+main: electricsteve.personalities.Personalities
+api-version: '1.20'
+prefix: Personalities
+authors: [ElectricSteve, ItzCombozy]
+description: Give people personalities
