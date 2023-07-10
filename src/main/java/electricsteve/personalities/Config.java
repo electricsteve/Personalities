@@ -25,43 +25,22 @@
 package electricsteve.personalities;
 
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
+import java.util.Objects;
 
-public final class Personalities extends JavaPlugin{
-    private static Personalities plugin;
-    public FileConfiguration config = getConfig();
+public class Config {
 
-    @Override
-    public void onEnable() {
-        LogInfo("Personalities is loading...");
-        plugin = this;
-        LogInfo("Loading config.");
-        config.addDefault("enable-personality-on-join", true);
-        config.addDefault("personality-given-on-join", "random");
-        saveConfig();
-        List<String> IncorrectConfigSettings = Config.checkIncorrectConfig();
-        LogWarning(IncorrectConfigSettings.toString());
-        LogInfo("Config loaded.");
 
-    }
+    public static List<String> checkIncorrectConfig() {
+        FileConfiguration config = Personalities.getPlugin().getConfig();
+        List<String> IncorrectConfigSettings = new ArrayList<String>();
+        String[] CorrectPGOJ = new String[] {"random", "*REPLACE*"};
 
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
-    }
+        if (Arrays.stream(CorrectPGOJ).noneMatch(Objects.requireNonNull(config.getString("personality-given-on-join"))::equals)) IncorrectConfigSettings.add("personality-given-on-join");
 
-    private void LogInfo(String msg) {
-        plugin.getLogger().log(Level.INFO, msg);
-    }
-
-    private void LogWarning(String msg) {
-        plugin.getLogger().log(Level.WARNING, msg);
-    }
-
-    public static Personalities getPlugin() {
-        return plugin;
+        return IncorrectConfigSettings;
     }
 }

@@ -22,46 +22,20 @@
  * SOFTWARE.
  */
 
-package electricsteve.personalities;
+package electricsteve.personalities.Events;
 
+import electricsteve.personalities.Personalities;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 
-import java.util.List;
-import java.util.logging.Level;
+public class PlayerJoinGivePersonality implements Listener {
+    FileConfiguration config = Personalities.getPlugin().getConfig();
 
-public final class Personalities extends JavaPlugin{
-    private static Personalities plugin;
-    public FileConfiguration config = getConfig();
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        // Give player a random personality on join if enabled
 
-    @Override
-    public void onEnable() {
-        LogInfo("Personalities is loading...");
-        plugin = this;
-        LogInfo("Loading config.");
-        config.addDefault("enable-personality-on-join", true);
-        config.addDefault("personality-given-on-join", "random");
-        saveConfig();
-        List<String> IncorrectConfigSettings = Config.checkIncorrectConfig();
-        LogWarning(IncorrectConfigSettings.toString());
-        LogInfo("Config loaded.");
-
-    }
-
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
-    }
-
-    private void LogInfo(String msg) {
-        plugin.getLogger().log(Level.INFO, msg);
-    }
-
-    private void LogWarning(String msg) {
-        plugin.getLogger().log(Level.WARNING, msg);
-    }
-
-    public static Personalities getPlugin() {
-        return plugin;
     }
 }
