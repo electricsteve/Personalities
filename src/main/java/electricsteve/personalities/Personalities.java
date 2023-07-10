@@ -27,6 +27,7 @@ package electricsteve.personalities;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -36,16 +37,20 @@ public final class Personalities extends JavaPlugin{
 
     @Override
     public void onEnable() {
-        LogInfo("Personalities is loading...");
         plugin = this;
+        File configFile = new File(getDataFolder(), "config.yml");
+
+        LogInfo("Personalities is loading...");
         LogInfo("Loading config.");
         config.addDefault("enable-personality-on-join", true);
         config.addDefault("personality-given-on-join", "random");
+        if (!(configFile.exists()) || configFile.length() == 0) saveDefaultConfig();
         saveConfig();
+        LogInfo(String.valueOf(configFile.length()));
         List<String> IncorrectConfigSettings = Config.checkIncorrectConfig();
-        LogWarning(IncorrectConfigSettings.toString());
+        if (!(IncorrectConfigSettings.isEmpty())) LogWarning("Incorrect config options:" + IncorrectConfigSettings.toString() + "These config options are incorrect and are reset to their defaults.");
         LogInfo("Config loaded.");
-
+        LogInfo("Personalities loaded!");
     }
 
     @Override

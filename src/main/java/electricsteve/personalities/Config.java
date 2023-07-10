@@ -24,6 +24,7 @@
 
 package electricsteve.personalities;
 
+import com.google.common.primitives.Booleans;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.ArrayList;
@@ -39,7 +40,10 @@ public class Config {
         List<String> IncorrectConfigSettings = new ArrayList<String>();
         String[] CorrectPGOJ = new String[] {"random", "*REPLACE*"};
 
-        if (Arrays.stream(CorrectPGOJ).noneMatch(Objects.requireNonNull(config.getString("personality-given-on-join"))::equals)) IncorrectConfigSettings.add("personality-given-on-join");
+        if (Arrays.stream(CorrectPGOJ).noneMatch(Objects.requireNonNull(config.getString("personality-given-on-join"))::equals)) {
+            IncorrectConfigSettings.add("personality-given-on-join:" + config.getString("personality-given-on-join"));
+        }
+
 
         return IncorrectConfigSettings;
     }

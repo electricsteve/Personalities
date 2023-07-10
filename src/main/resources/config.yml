@@ -1,0 +1,2 @@
+enable-personality-on-join: true
+personality-given-on-join: random
